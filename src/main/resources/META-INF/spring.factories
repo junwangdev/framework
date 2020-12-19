@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  org.gudian.mybatis.MyMetaObjectHandler,org.gudian.mybatis.PageHelperConfig
