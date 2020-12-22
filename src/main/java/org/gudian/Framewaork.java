@@ -1,7 +1,9 @@
 package org.gudian;
 
+import org.gudian.security.SecurityConfigProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
  * @author GJW
@@ -11,6 +13,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Framewaork {
 
     public static void main(String[] args) {
+
         SpringApplication.run(Framewaork.class);
     }
+
+
+
 }
