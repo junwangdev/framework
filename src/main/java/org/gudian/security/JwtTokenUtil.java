@@ -6,7 +6,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -16,15 +15,15 @@ import java.util.Map;
 
 /**
  * @author GJW
- * @time: 2020/12/22 11:31
+ * : 2020/12/22 11:31
  */
 @Component
 public class JwtTokenUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
-    //存入token内的用户名
+    //存入token内的用户名的kye
     private static final String CLAIM_KEY_USERNAME = "sub";
-    //出入token的创建时间
+    //存入token的创建时间
     private static final String CLAIM_KEY_CREATED = "created";
 
     @Autowired

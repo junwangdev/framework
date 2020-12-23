@@ -6,18 +6,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.util.WebUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author GJW
@@ -25,6 +35,8 @@ import java.io.IOException;
  * 2020/12/22 16:41
  */
 
+@ConditionalOnBean(UserDetailsService.class)
+@Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationTokenFilter.class);
 
@@ -40,11 +52,23 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Autowired
     private SecurityConfigProperties securityConfigProperties;
 
+    @Autowired
+    public PathMatcher pathMatcher;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
+
+        //判断是否是匿名访问的接口 如果是直接放行，不进行token解析
+        List<String> ignoreUrls = securityConfigProperties.getIgnoreUrls();
+
+        for (String ignoreUrl : ignoreUrls) {
+            if (pathMatcher.match(ignoreUrl,request.getRequestURI())) {
+                chain.doFilter(request,response);
+                return;
+            }
+        }
 
         String tokenName = securityConfigProperties.getTokenHeader();
         //获取请求头
@@ -72,7 +96,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }
-
         }
         chain.doFilter(request, response);
     }

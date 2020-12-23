@@ -1,4 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   org.gudian.mybatis.MyMetaObjectHandler,\
   org.gudian.mybatis.PageHelperConfig,\
-  org.gudian.security.SecurityConfig
+  org.gudian.security.SecurityConfiguration,\
+  org.gudian.web.WebConfig

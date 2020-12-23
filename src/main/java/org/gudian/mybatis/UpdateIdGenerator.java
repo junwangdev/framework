@@ -5,7 +5,7 @@ package org.gudian.mybatis;
  * 生成updateId接口
  * 用于再修改表时设置表的修改id(如修改人id)
  * 该接口应被实现
- * @time: 2020/12/18 14:03
+ * : 2020/12/18 14:03
  */
 public interface UpdateIdGenerator {
     /**

@@ -7,7 +7,7 @@ import java.util.Properties;
 
 /**
  * @author GJW
- * @time: 2020/12/19 17:33
+ * : 2020/12/19 17:33
  */
 @Configuration
 public class PageHelperConfig {

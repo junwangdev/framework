@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 /**
  * @author GJW
- * @time: 2020/12/19 18:08
+ * : 2020/12/19 18:08
  */
 @SpringBootApplication
 public class Framewaork {

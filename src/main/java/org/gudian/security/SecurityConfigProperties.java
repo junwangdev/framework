@@ -1,5 +1,6 @@
 package org.gudian.security;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,12 +11,10 @@ import java.util.List;
 
 /**
  * @author GJW
- * @time: 2020/12/22 11:32
+ * : 2020/12/22 11:32
  */
-@Component
-@ConfigurationProperties(prefix = "security")
-@Getter
-@ToString
+@ConfigurationProperties(prefix = "security.config")
+@Data
 public class SecurityConfigProperties {
 
 

@@ -1,8 +1,6 @@
 package org.gudian.security;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.ArrayUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.gudian.security.filter.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -19,27 +17,27 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author GJW
- * @time: 2020/12/22 16:35
+ * : 2020/12/22 16:35
  */
 
 @Configuration
-//@ConditionalOnBean(UserDetailsService.class)
-@EnableConfigurationProperties({SecurityConfigProperties.class})
+@Slf4j
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
-@Import({JwtTokenUtil.class})
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@ConditionalOnBean(UserDetailsService.class)
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     /**
@@ -47,6 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * */
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
     /**
      * 当访问接口没有权限时，如要自定义的返回结果，应实现 AccessDeniedHandler  接口
@@ -63,12 +64,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SecurityConfigProperties securityConfigProperties;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
         //允许不用登陆即可访问的url
         List<String> ignoreUrls = securityConfigProperties.getIgnoreUrls();
 
+
+        log.info("允许匿名访问的接口==>"+ignoreUrls);
 
         httpSecurity.csrf()// 由于使用的是JWT，我们这里不需要csrf
                 .disable()
@@ -96,41 +103,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated();
         // 禁用缓存
         httpSecurity.headers().cacheControl();
-        // 添加JWT filter
-        httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        //添加自定义未授权和未登录结果返回
-        httpSecurity.exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler)
-                .authenticationEntryPoint(authenticationEntryPoint);
+        // 添加JWT filter
+        httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
+
+        if(accessDeniedHandler!=null && authenticationEntryPoint !=null){
+            //添加自定义未授权和未登录结果返回
+            httpSecurity.exceptionHandling()
+                    .accessDeniedHandler(accessDeniedHandler)
+                    .authenticationEntryPoint(authenticationEntryPoint);
+        }
+
+
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(passwordEncoder);
     }
 
 
 
-
-    /**
-     * 设置密码加密规则
-     * */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-
-
-    /**
-     * 放入token过滤器
-     * */
-    @Bean
-    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter(){
-        return new JwtAuthenticationTokenFilter();
-    }
 
 
     @Bean
@@ -138,6 +133,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
-
 }

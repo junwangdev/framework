@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * @author GJW
  * MybatisPlus 自动填充功能实现
- * @time: 2020/12/18 13:55
+ * : 2020/12/18 13:55
  */
 @Configuration
 public class MyMetaObjectHandler implements MetaObjectHandler {

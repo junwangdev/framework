@@ -11,7 +11,7 @@ import java.util.Date;
  * @author GJW
  * 基础bean，所有bean都要继承它
  *
- * @time: 2020/12/17 15:16
+ * : 2020/12/17 15:16
  */
 
 @Data
