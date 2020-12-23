@@ -2,25 +2,16 @@ package org.gudian.security.filter;
 
 import org.gudian.security.JwtTokenUtil;
 import org.gudian.security.SecurityConfigProperties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.servlet.support.RequestContextUtils;
-import org.springframework.web.util.WebUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -38,11 +29,11 @@ import java.util.List;
 @ConditionalOnBean(UserDetailsService.class)
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationTokenFilter.class);
 
     /**
      * 必须实现此接口 用户登陆时通过用户名获取用户信息
      * */
+
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -65,6 +56,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
         for (String ignoreUrl : ignoreUrls) {
             if (pathMatcher.match(ignoreUrl,request.getRequestURI())) {
+                //这里放行后直接调用controller
                 chain.doFilter(request,response);
                 return;
             }

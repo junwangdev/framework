@@ -4,10 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.gudian.security.filter.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,15 +15,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * @author GJW
@@ -38,7 +33,6 @@ import java.util.logging.Logger;
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 @ConditionalOnBean(UserDetailsService.class)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
 
     /**
      * 必须实现此接口，用于通过用户名获取当前登陆账号状态
@@ -83,7 +77,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, // 允许对于网站静态资源的无授权访问
+                // 允许对于网站静态资源的无授权访问
+                .antMatchers(HttpMethod.GET,
                         "/",
                         "/*.html",
                         "/favicon.ico",
@@ -95,11 +90,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 )
                 .permitAll()
                 //将配置的路径设置为无权即可访问
-                .antMatchers(ignoreUrls.toArray(new String[ignoreUrls.size()]))
+                .antMatchers(ignoreUrls.toArray(new String[0]))
                 .permitAll()
-                .antMatchers(HttpMethod.OPTIONS)//跨域请求会先进行一次options请求
+                //跨域请求会先进行一次options请求
+                .antMatchers(HttpMethod.OPTIONS)
                 .permitAll()
-                .anyRequest()// 除上面外的所有请求全部需要鉴权认证
+                // 除上面外的所有请求全部需要鉴权认证
+                .anyRequest()
                 .authenticated();
         // 禁用缓存
         httpSecurity.headers().cacheControl();
@@ -123,9 +120,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder);
     }
-
-
-
 
 
     @Bean
