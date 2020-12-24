@@ -1,4 +1,4 @@
-package org.gudian.result;
+package org.gudian.web.result;
 
 import lombok.Getter;
 

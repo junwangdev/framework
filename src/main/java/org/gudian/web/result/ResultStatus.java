@@ -1,9 +1,6 @@
-package org.gudian.result;
+package org.gudian.web.result;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
-
-import java.nio.file.AccessDeniedException;
 
 /**
  * @author GJW
@@ -16,7 +13,7 @@ public enum ResultStatus{
     PARAMNOTMATCH(1,"参数不正确"),
     ERROR(500,"系统异常"),
     NoLogin(403,"未登录或登陆状态已过期"),
-    NoAuthorize(403,"对不起，您无权访问");
+    NoAuthority(403,"对不起，您无权访问");
 
 
     private ResultStatus(Integer code,String msg){

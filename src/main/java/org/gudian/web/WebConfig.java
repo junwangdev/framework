@@ -1,5 +1,6 @@
 package org.gudian.web;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -7,9 +8,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * @author GJW
  * SpringMVC的配置
- * @time: 2020/12/23 9:26
+ * : 2020/12/23 9:26
  */
 @Configuration
+@ComponentScan("org.gudian.web")
 public class WebConfig implements WebMvcConfigurer {
 
 
