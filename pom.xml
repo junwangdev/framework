@@ -101,6 +101,14 @@
         </dependency>
 
 
+
+        <!-- knife4j 整合了swagger提供一套简约而不简单的UI-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>

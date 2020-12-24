@@ -1,5 +1,6 @@
 package org.gudian;
 
+import io.swagger.annotations.Api;
 import org.gudian.security.SecurityConfigProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +12,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  */
 @SpringBootApplication
 public class Framewaork {
+
 
     public static void main(String[] args) {
 
