@@ -28,8 +28,9 @@ public class RestAccessDeniedHandler implements AccessDeniedHandler {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
 
+
         PrintWriter writer = response.getWriter();
-        writer.write(JSONUtil.toJsonStr(ResultStatus.NoAuthority.getResponseResult()));
+        writer.write(JSONUtil.toJsonStr(ResultStatus.NOAUTHORITY.getResponseResult()));
     }
 
 }

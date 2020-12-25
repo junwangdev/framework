@@ -12,8 +12,9 @@ public enum ResultStatus{
     FAIL(0,"错误"),
     PARAMNOTMATCH(1,"参数不正确"),
     ERROR(500,"系统异常"),
-    NoLogin(403,"未登录或登陆状态已过期"),
-    NoAuthority(403,"对不起，您无权访问");
+    NOLOGIN(403,"未登录或登陆状态已过期"),
+    NOAUTHORITY(403,"对不起，您无权访问"),
+    VALIDATEFAILED(415,"请求的格式错误");
 
 
     private ResultStatus(Integer code,String msg){
@@ -21,6 +22,7 @@ public enum ResultStatus{
         this.message = msg;
         this.responseResult = ResponseResult.newInstance(this);
     }
+
 
     private Integer code;
     private String message;
