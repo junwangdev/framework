@@ -21,6 +21,7 @@ import java.util.Map;
 public class JwtTokenUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
+
     //存入token内的用户名的kye
     private static final String CLAIM_KEY_USERNAME = "sub";
     //存入token的创建时间

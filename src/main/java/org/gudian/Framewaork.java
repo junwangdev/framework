@@ -19,6 +19,4 @@ public class Framewaork {
         SpringApplication.run(Framewaork.class);
     }
 
-
-
 }

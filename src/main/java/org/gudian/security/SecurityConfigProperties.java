@@ -39,5 +39,4 @@ public class SecurityConfigProperties {
      * */
     private List<String> ignoreUrls;
 
-
 }

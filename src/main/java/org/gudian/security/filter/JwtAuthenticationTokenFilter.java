@@ -25,7 +25,6 @@ import java.util.List;
  * JWT登录授权过滤器
  * 2020/12/22 16:41
  */
-
 @ConditionalOnBean(UserDetailsService.class)
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
@@ -51,20 +50,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
 
-        //判断是否是匿名访问的接口 如果是直接放行，不进行token解析
-        List<String> ignoreUrls = securityConfigProperties.getIgnoreUrls();
-
-        for (String ignoreUrl : ignoreUrls) {
-            if (pathMatcher.match(ignoreUrl,request.getRequestURI())) {
-                //这里放行后直接调用controller
-                chain.doFilter(request,response);
-                return;
-            }
-        }
-
         String tokenName = securityConfigProperties.getTokenHeader();
         //获取请求头
         String authToken = request.getHeader(tokenName);
+
 
         if (authToken != null) {
 

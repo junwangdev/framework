@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author GJW
- * @time: 2020/12/24 10:34
+ *  2020/12/24 10:34
  */
 @Data
 @ConfigurationProperties(prefix = "swagger.config")

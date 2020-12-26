@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author GJW
  * swagger 配置
- * @time: 2020/12/24 10:28
+ *  2020/12/24 10:28
  */
 @Configuration
 @EnableSwagger2
