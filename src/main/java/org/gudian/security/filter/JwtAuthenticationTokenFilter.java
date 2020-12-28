@@ -60,7 +60,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             //获取当前登陆用户名称
             String username = jwtTokenUtil.getUserNameFromToken(authToken);
 
-
             //当前用户名不为空 并且是未登录状态
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 

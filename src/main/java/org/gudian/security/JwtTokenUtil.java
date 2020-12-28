@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -137,5 +138,24 @@ public class JwtTokenUtil {
         Claims claims = getClaimsFromToken(token);
         claims.put(CLAIM_KEY_CREATED, new Date());
         return generateToken(claims);
+    }
+
+    /**
+     * 从 SecurityContext 内获取当前登陆人的id
+     * */
+    public Long getCurrentUserId(){
+
+        Object principal = null;
+
+        try {
+            principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception e) {}
+
+        if(principal instanceof SecurityUserDetails){
+            SecurityUserDetails userDetails = (SecurityUserDetails)principal;
+            return userDetails.getUserId();
+        }
+
+        return null;
     }
 }
