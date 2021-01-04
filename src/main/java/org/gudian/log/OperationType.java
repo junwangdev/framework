@@ -2,7 +2,7 @@ package org.gudian.log;
 
 /**
  * @author GJW
- * @time: 2020/12/28 17:14
+ *  2020/12/28 17:14
  */
 public enum OperationType {
 
@@ -14,7 +14,7 @@ public enum OperationType {
     CRETED,
 
     /**
-     * 新增
+     * 查询
      * */
     RETRIEVE,
 

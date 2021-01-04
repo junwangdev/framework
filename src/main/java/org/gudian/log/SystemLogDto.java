@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * @author GJW
- * @time: 2020/12/28 17:12
+ *  2020/12/28 17:12
  */
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,7 +42,7 @@ public class SystemLogDto extends BaseBean {
     private OperationType operationType;
 
     /**
-     * 操作所影响的数据类型
+     * 操作描述
      * */
     private String description;
 

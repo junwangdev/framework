@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * : 2020/12/24 9:12
  */
 @RestControllerAdvice
-public class AuthorityHandler {
+public class GlobalHandler {
 
     @ExceptionHandler(MyException.class)
-    public ResponseResult noAuthority(MyException e){
+    public ResponseResult handler(MyException e){
+        e.printStackTrace();
         return e.getResultStatus().getResponseResult();
     }
 

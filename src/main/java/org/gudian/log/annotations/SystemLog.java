@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 /**
  * @author GJW
- * @time: 2020/12/28 15:34
+ *  2020/12/28 15:34
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
@@ -25,5 +25,9 @@ public @interface SystemLog {
      * */
     String value();
 
-    String[] params() default {};
+    /**
+     * 保存对应的参数 1，3，2 表示对方法传入的前3个参数进行保存
+     * 不写默认保存所有
+     * */
+    int[] params() default {};
 }
