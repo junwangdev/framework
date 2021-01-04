@@ -1,6 +1,8 @@
 package org.gudian.web.converter;
 
+import cn.hutool.core.util.StrUtil;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
@@ -15,27 +17,25 @@ import java.util.Date;
 @Component
 public class StringToDateConverter implements Converter<String, Date> {
 
-    private static ThreadLocal<SimpleDateFormat[]> formats = new ThreadLocal<SimpleDateFormat[]>() {
-        @Override
-        protected SimpleDateFormat[] initialValue() {
-            return new SimpleDateFormat[]{
-                    new SimpleDateFormat("yyyy-MM"),
-                    new SimpleDateFormat("yyyy-MM-dd"),
-                    new SimpleDateFormat("yyyy-MM-dd HH"),
-                    new SimpleDateFormat("yyyy-MM-dd HH:mm"),
-                    new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-            };
-        }
-    };
+    private static ThreadLocal<SimpleDateFormat[]> formats = ThreadLocal.withInitial(() -> new SimpleDateFormat[]{
+            new SimpleDateFormat("yyyy-MM"),
+            new SimpleDateFormat("yyyy-MM-dd"),
+            new SimpleDateFormat("yyyy-MM-dd HH"),
+            new SimpleDateFormat("yyyy-MM-dd HH:mm"),
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    });
+
 
     @Override
-    public Date convert(String source) {
-        if (source == null || source.trim().equals("")) {
+    public Date convert(@Nullable String source) {
+
+        if ( StrUtil.isBlank( source ) ) {
             return null;
         }
 
         Date result = null;
         String originalValue = source.trim();
+
         if (source.matches("^\\d{4}-\\d{1,2}$")) {
             return parseDate(source, formats.get()[0]);
         } else if (source.matches("^\\d{4}-\\d{1,2}-\\d{1,2}$")) {
@@ -55,13 +55,9 @@ public class StringToDateConverter implements Converter<String, Date> {
                     result = new Date(1000L * timeStamp);
                 }
             } catch (Exception e) {
-                result = null;
                 e.printStackTrace();
             }
-        } else {
-            result = null;
         }
-
         return result;
     }
 
@@ -72,13 +68,13 @@ public class StringToDateConverter implements Converter<String, Date> {
      * @param dateFormat 日期格式化器
      * @return Date 日期
      */
-    public Date parseDate(String dateStr, DateFormat dateFormat) {
+    private Date parseDate(String dateStr, DateFormat dateFormat) {
         Date date = null;
         try {
             date = dateFormat.parse(dateStr);
-        } catch (Exception e) {
-
+        } catch (Exception ignored) {
         }
         return date;
     }
+
 }

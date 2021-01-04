@@ -36,11 +36,13 @@ public class SystemLogAop {
     @Autowired(required = false)
     private LogHandler logHandler;
 
-    @Pointcut(" @annotation(systemLog) ")
-    public void pointCut(SystemLog systemLog){}
-
     @Autowired
     private ObjectMapper objectMapper;
+
+
+
+    @Pointcut(" @annotation(systemLog) ")
+    public void pointCut(SystemLog systemLog){}
 
 
     private ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5,10,2, TimeUnit.SECONDS,new LinkedBlockingDeque<>(20));
@@ -92,9 +94,7 @@ public class SystemLogAop {
 
 
         //调用 LogHandler 处理日志
-        threadPoolExecutor.execute( ()->{
-            logHandler.handler(systemLogDto);
-        });
+        threadPoolExecutor.execute( ()-> logHandler.handler(systemLogDto) );
 
         return result;
     }
