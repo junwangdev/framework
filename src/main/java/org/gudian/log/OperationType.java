@@ -2,6 +2,7 @@ package org.gudian.log;
 
 /**
  * @author GJW
+ * 日志类型
  *  2020/12/28 17:14
  */
 public enum OperationType {

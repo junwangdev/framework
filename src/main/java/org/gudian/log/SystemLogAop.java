@@ -26,6 +26,7 @@ import java.util.concurrent.*;
 
 /**
  * @author GJW
+ * 日志处理切面类
  *  2020/12/28 15:32
  */
 @ConditionalOnBean(LogHandler.class)

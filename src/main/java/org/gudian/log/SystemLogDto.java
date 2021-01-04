@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * @author GJW
+ * 日志封装类
  *  2020/12/28 17:12
  */
 @NoArgsConstructor
