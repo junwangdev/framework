@@ -30,7 +30,7 @@ public class RestAccessDeniedHandler implements AccessDeniedHandler {
 
 
         PrintWriter writer = response.getWriter();
-        writer.write(JSONUtil.toJsonStr(ResultStatus.NOAUTHORITY.getResponseResult()));
+        writer.write(JSONUtil.toJsonStr(ResultStatus.NoAuthority.getResponseResult()));
     }
 
 }
