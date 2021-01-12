@@ -1,5 +1,6 @@
 package org.gudian.web;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,9 @@ import java.text.SimpleDateFormat;
 public class WebConfig implements WebMvcConfigurer {
 
 
+    /**
+     * 跨域配置
+     * */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -30,10 +34,18 @@ public class WebConfig implements WebMvcConfigurer {
                 .maxAge(3600);
     }
 
+
+    /**
+     * 配置 Jackson 序列化
+     * */
     @Bean
      public ObjectMapper objectMapper(){
 
         ObjectMapper mapper = new ObjectMapper();
+
+        //设置返回json时忽略null值
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //设置日期类型格式
         mapper.setDateFormat(sdf);

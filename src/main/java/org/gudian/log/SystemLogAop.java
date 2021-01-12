@@ -173,7 +173,9 @@ public class SystemLogAop {
         return signature.getMethod().getParameters();
     }
 
-
+    /**
+     * 获取方法参数的名称
+     * */
     private String getParamName(Parameter parameter){
 
         RequestParam requestParam = parameter.getAnnotation(RequestParam.class);

@@ -10,11 +10,11 @@ import lombok.Getter;
 public enum ResultStatus{
     SUCCESS(200,"成功"),
     FAIL(0,"错误"),
-    PARAMNOTMATCH(1,"参数不正确"),
     ERROR(500,"系统异常"),
     NOLOGIN(403,"未登录或登陆状态已过期"),
     NOAUTHORITY(403,"对不起，您无权访问"),
-    VALIDATEFAILED(415,"请求的格式错误");
+    VALIDATEFAILED(415,"请求的参数错误"),
+    LOGINFAIL(600,"用户名或密码错误");
 
 
     private ResultStatus(Integer code,String msg){
