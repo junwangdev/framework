@@ -57,7 +57,6 @@ public class RepeatSubmitHandler {
         return joinPoint.proceed(joinPoint.getArgs());
     }
 
-
     /**
      * 生成 key
      * */

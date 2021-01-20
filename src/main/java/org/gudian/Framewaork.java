@@ -14,9 +14,13 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 public class Framewaork {
 
 
-    public static void main(String[] args) {
+  /*  public static void main(String[] args) {
 
         SpringApplication.run(Framewaork.class);
-    }
+    }*/
 
+    public static void main(String[] args) {
+        String a = "${DATAMONTH}";
+        System.out.println(a.replaceAll("\\$\\{DATAMONTH\\}","123"));
+    }
 }

@@ -28,7 +28,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setContentType("application/json");
 
         PrintWriter writer = response.getWriter();
-        writer.write(JSONUtil.toJsonStr(ResultStatus.NOLOGIN.getResponseResult()));
+        writer.write(JSONUtil.toJsonStr(ResultStatus.NoLogin.getResponseResult()));
     }
 
 }

@@ -44,7 +44,7 @@ public class ValidateHandler {
      * */
     private ResponseResult handlerError(BindingResult bindingResult) {
         FieldError fieldError = bindingResult.getFieldError();
-        return ResultStatus.VALIDATEFAILED.setMsg( fieldError.getDefaultMessage() );
+        return ResultStatus.ValidateFail.setMsg( fieldError.getDefaultMessage() );
     }
 
 
